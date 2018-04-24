@@ -2,12 +2,12 @@
 <html>
 <head>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
-    <meta charset='utf-8' />
-    <title>Tim's Pizza</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+  <meta charset='utf-8' />
+  <title>Tim's Pizza</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <link href="https://fonts.googleapis.com/css?family=Vollkorn" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -45,11 +45,52 @@
       <h2>Tim's is going global! Use the map below to find a location near you.</h2>
       <div id='map' style='width: 400px; height: 300px;'></div>
 <script>
-  mapboxgl.accessToken = 'pk.eyJ1Ijoic3RvcGljMTMiLCJhIjoiY2pnYmQ1Y3llMXl0ejJ4cWpsbmJrMWtmdiJ9.R1lW4rNrIfO4m1mBx18LNA';
+  mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXN0aW5hbHUiLCJhIjoiY2pnZTBpOHJ1YWdmMzJ3bnZjcDNrYTAybyJ9.VVGGMxukjB74OZvYezvSRA';
   var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/stopic13/cjgbgrd0n4mos2rnihvtw2ipr'
   });
+
+  var geojson = {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-72.288424, 43.703301]
+      },
+      properties: {
+        title: "Tim's Pizza Place",
+        description: 'Hanover, NH'
+      }
+    },
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [-121.976837, 37.329645]
+      },
+      properties: {
+        title: "Christina's Pizza Place",
+        description: 'Cupertino, CA'
+      }
+    }]
+  };
+
+  // add markers to map
+geojson.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)
+  .setLngLat(marker.geometry.coordinates)
+  .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+  .addTo(map);
+});
 
 </script>
     </div>
